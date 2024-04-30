@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sport_app/auth/auth_service.dart';
+import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/components/my_textfield.dart';
 

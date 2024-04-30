@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sport_app/auth/login_or_register.dart';
+import 'package:sport_app/services/auth/login_or_register.dart';
 import 'package:sport_app/pages/home_page.dart';
+import 'package:sport_app/pages/profile_page.dart';
 
 class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
@@ -19,7 +20,7 @@ class _AuthGateState extends State<AuthGate> {
         builder: (context,snapshot){
           // kullanıcı oturum açtığında
           if(snapshot.hasData){
-            return const HomePage();
+            return ProfilePage();
           }
           else{
             return LoginOrRegister();

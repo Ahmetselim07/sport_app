@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // Firebase Authentication ile kullanıcının mevcut oturumunu almak için getCurrentUser fonksiyonu
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
   // üye olmak
   Future<UserCredential> signInWithEmailPassword(String email, password) async {
     try {

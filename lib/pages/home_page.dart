@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sport_app/auth/auth_service.dart';
+import 'package:sport_app/services/auth/auth_service.dart';
+import 'package:sport_app/components/my_scaffold.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,19 +13,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('SPOR',),
-        centerTitle: true,
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              logout();
-            },
-            child: Image.asset('assets/images/defaultProfile.png'),
-          ),
-        ],
-      ),
+    return MyScaffold(
+      body: Center(),
     );
   }
 }

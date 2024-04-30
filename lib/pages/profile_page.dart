@@ -1,12 +1,222 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sport_app/services/auth/auth_service.dart';
+import 'package:sport_app/components/my_button.dart';
+import 'package:sport_app/components/my_scaffold.dart';
+import 'package:sport_app/pages/bacak_page.dart';
+import 'package:sport_app/pages/biceps_page.dart';
+import 'package:sport_app/pages/gogus_page.dart';
+import 'package:sport_app/pages/omuz_page.dart';
+import 'package:sport_app/pages/s%C4%B1rt_page.dart';
+import 'package:sport_app/pages/triceps_page.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  AuthService authService = AuthService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Profil'),
+    return MyScaffold(
+      color: Theme.of(context).colorScheme.background,
+      body: SingleChildScrollView(
+        child: FutureBuilder<DocumentSnapshot>(
+            future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(); // Veriler yüklenirken gösterilecek yüklenme animasyonu
+              }
+              if (snapshot.hasError) {
+                return Text(
+                    'Error: ${snapshot.error}'); // Hata durumunda hata mesajı gösterme
+              }
+              if (!snapshot.hasData || snapshot.data!.data() == null) {
+                return const Text(
+                    'No data found'); // Veri yoksa gösterilecek mesaj
+              }
+
+              // Verileri Firestore'dan çekin
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
+              final String name = userData['name'] ?? '';
+              final String surname = userData['surname'] ?? '';
+              final String height = userData['height'] ?? '';
+              final String weight = userData['weight'] ?? '';
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(
+                        'assets/images/defaultProfile.png',
+                        height: 100,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              decoration: TextDecoration.underline
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(surname,
+                          style: TextStyle(
+                              fontSize: 20,
+                              decoration: TextDecoration.underline
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(20),
+                        height: 40,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.background,
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Center(
+                            child: Text(
+                          "BOY   :        $height",
+                        )),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Container(
+                        height: 40,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.background,
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Center(child: Text("Kilo   :        $weight")),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Divider(
+                    indent: 50,
+                    endIndent: 50,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Tüm Hareketler',
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      Icon(Icons.arrow_downward)
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  MyButton(
+                      text: 'Göğüs',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const GogusPage()));
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyButton(
+                      text: 'Triceps',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TricepsPage()));
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyButton(
+                      text: 'Biceps',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BicepsPage()));
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyButton(
+                      text: 'Sırt',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SirtPage()));
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyButton(
+                      text: 'Bacak',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BacakPage()));
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyButton(
+                      text: 'Omuz',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OmuzPage()));
+                      }),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        authService.signOut();
+                      },
+                      icon: const Icon(Icons.logout))
+                ],
+              );
+            }),
+      ),
     );
+  }
+
+  // Kullanıcı verilerini Firestore'dan alacak olan fonksiyon
+  Future<DocumentSnapshot> _getUserData() async {
+    final user = await authService.getCurrentUser(); // Mevcut kullanıcıyı al
+    return _firestore
+        .collection('users')
+        .doc(user!.uid)
+        .get(); // Kullanıcı verilerini Firestore'dan al
   }
 }
