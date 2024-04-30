@@ -20,29 +20,29 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MyScaffold(
       color: Theme.of(context).colorScheme.background,
-      body: SingleChildScrollView(
-        child: FutureBuilder<DocumentSnapshot>(
-            future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(); // Veriler yüklenirken gösterilecek yüklenme animasyonu
-              }
-              if (snapshot.hasError) {
-                return Text(
-                    'Error: ${snapshot.error}'); // Hata durumunda hata mesajı gösterme
-              }
-              if (!snapshot.hasData || snapshot.data!.data() == null) {
-                return const Text(
-                    'No data found'); // Veri yoksa gösterilecek mesaj
-              }
+      body: FutureBuilder<DocumentSnapshot>(
+          future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(); // Veriler yüklenirken gösterilecek yüklenme animasyonu
+            }
+            if (snapshot.hasError) {
+              return Text(
+                  'Error: ${snapshot.error}'); // Hata durumunda hata mesajı gösterme
+            }
+            if (!snapshot.hasData || snapshot.data!.data() == null) {
+              return const Text(
+                  'No data found'); // Veri yoksa gösterilecek mesaj
+            }
 
-              // Verileri Firestore'dan çekin
-              final userData = snapshot.data!.data() as Map<String, dynamic>;
-              final String name = userData['name'] ?? '';
-              final String surname = userData['surname'] ?? '';
-              final String height = userData['height'] ?? '';
-              final String weight = userData['weight'] ?? '';
-              return Column(
+            // Verileri Firestore'dan çekin
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            final String name = userData['name'] ?? '';
+            final String surname = userData['surname'] ?? '';
+            final String height = userData['height'] ?? '';
+            final String weight = userData['weight'] ?? '';
+            return SingleChildScrollView(
+              child: Column(
                 children: [
                   const SizedBox(
                     height: 20,
@@ -139,7 +139,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const GogusPage()));
+                                builder: (context) =>  GogusPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -205,9 +205,9 @@ class ProfilePage extends StatelessWidget {
                       },
                       icon: const Icon(Icons.logout))
                 ],
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     );
   }
 
