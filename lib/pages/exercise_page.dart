@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sport_app/pages/gogus_page.dart';
 
 class MyCheckbox extends StatefulWidget {
+  
   final Widget title;
   final Widget subtitle;
+  final TextEditingController controller;
 
-  const MyCheckbox({Key? key, required this.title, required this.subtitle,})
-      : super(key: key);
+  const MyCheckbox({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<MyCheckbox> createState() => _MyCheckboxState();
+  
 }
 
 class _MyCheckboxState extends State<MyCheckbox> {
+  GogusPage _gogusPage = GogusPage();
+  
   bool? _isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -44,7 +54,6 @@ class _MyCheckboxState extends State<MyCheckbox> {
           flex: 1,
           child: Padding(
             padding: const EdgeInsets.only(right: 15.0),
-            
           ),
         ),
       ],

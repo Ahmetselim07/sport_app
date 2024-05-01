@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sport_app/pages/exercise_page.dart';
+import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/components/my_scaffold.dart';
 import 'package:sport_app/pages/bacak_page.dart';
 import 'package:sport_app/pages/biceps_page.dart';
-import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/pages/omuz_page.dart';
 import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
@@ -59,18 +60,17 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             name,
                             style: TextStyle(
-                              fontSize: 20,
-                              decoration: TextDecoration.underline
-                            ),
+                                fontSize: 20,
+                                decoration: TextDecoration.underline),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text(surname,
-                          style: TextStyle(
-                              fontSize: 20,
-                              decoration: TextDecoration.underline
-                            ),
+                          Text(
+                            surname,
+                            style: TextStyle(
+                                fontSize: 20,
+                                decoration: TextDecoration.underline),
                           ),
                         ],
                       )
@@ -139,7 +139,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  GogusPage()));
+                                builder: (context) => GogusPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -150,7 +150,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const TricepsPage()));
+                                builder: (context) =>  TricepsPage()));
                       }),
                   const SizedBox(
                     height: 10,

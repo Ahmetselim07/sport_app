@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sport_app/components/my_drawer.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 
@@ -8,37 +7,35 @@ class MyScaffold extends StatelessWidget {
   final Widget body;
   final Color? color;
   final Widget? bottomNavigationBar;
-   MyScaffold({
-    super.key,
+
+  MyScaffold({
+    Key? key,
     required this.body,
-    this.color, 
-    this.bottomNavigationBar, 
-  });
+    this.color,
+    this.bottomNavigationBar,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(child: IconButton(onPressed: (){
-        _authService.signOut();
-      }, icon: Icon(Icons.logout)),),
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(25),
-          child: Container(
-            decoration: BoxDecoration(border: Border(bottom: BorderSide())),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8, left: 75),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('SPOR', style: TextStyle(fontSize: 25)),
-                  Image.asset(
-                    'assets/images/defaultProfile.png',
-                    height: 60,
-                  ),
-                ],
+      drawer: MyDrawer(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: AppBar(
+          centerTitle: true, // Center the title horizontally
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('SPOR', style: TextStyle(fontSize: 30)),
+              Spacer(),
+               // Add a spacer to push the image to the right
+              Image.asset(
+                'assets/images/defaultProfile.png',
+                height: 60,
               ),
-            ),
+              SizedBox(width: 20), // Add some space after the image
+            ],
           ),
         ),
       ),

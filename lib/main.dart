@@ -1,19 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/services/auth/auth_gate.dart';
 import 'package:sport_app/firebase_options.dart';
-import 'package:sport_app/themes/dark_mode.dart';
-import 'package:sport_app/themes/light_mode.dart';
+import 'package:sport_app/themes/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+    child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  
+    MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AuthGate(),
-      theme: darkMode,
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
