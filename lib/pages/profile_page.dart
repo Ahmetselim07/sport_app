@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sport_app/pages/exercise_page.dart';
 import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_button.dart';
@@ -161,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const BicepsPage()));
+                                builder: (context) =>  BicepsPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -172,7 +171,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SirtPage()));
+                                builder: (context) =>  SirtPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -183,7 +182,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const BacakPage()));
+                                builder: (context) =>  BacakPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -194,7 +193,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const OmuzPage()));
+                                builder: (context) =>  OmuzPage()));
                       }),
                   const SizedBox(
                     height: 15,
