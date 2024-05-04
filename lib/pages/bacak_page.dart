@@ -13,7 +13,7 @@ class BacakPage extends StatelessWidget {
     return MyScaffold(
       body: Column(
         children: [
-            MyCheckbox(title: Text('Calf'), controller: _calfController, exercise: 'Calf'),
+            MyCheckbox(title: Text('Calf Raises'), controller: _calfController, exercise: 'Calf Raises'),
             SizedBox(height: 30,),
              MyCheckbox(title: Text('Leg Extension'), controller: _legExtensionController, exercise: 'Leg Extension'),
             SizedBox(height: 30,),

@@ -1,62 +1,113 @@
-// import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:sport_app/pages/gogus_page.dart';
+import 'package:flutter/material.dart';
+import 'package:sport_app/components/my_button.dart';
+import 'package:sport_app/components/my_button.dart';
+import 'package:sport_app/components/my_container.dart';
+import 'package:sport_app/components/my_scaffold.dart';
+import 'package:sport_app/pages/gogus_page.dart';
+import 'package:sport_app/pages/profile_page.dart';
+import 'package:sport_app/pages/triceps_page.dart';
 
-// class MyCheckbox extends StatefulWidget {
-  
-//   final Widget title;
-//   final Widget subtitle;
-//   final TextEditingController controller;
+class ExercisePage extends StatefulWidget {
+  @override
+  _ExercisePageState createState() => _ExercisePageState();
+}
 
-//   const MyCheckbox({
-//     Key? key,
-//     required this.title,
-//     required this.subtitle,
-//     required this.controller,
-//   }) : super(key: key);
+class _ExercisePageState extends State<ExercisePage> {
+  List<String> days = [
+    'Pazartesi',
+    'Salı',
+    'Çarşamba',
+    'Perşembe',
+    'Cuma',
+    'Cumartesi',
+    'Pazar'
+  ];
 
-//   @override
-//   State<MyCheckbox> createState() => _MyCheckboxState();
-  
-// }
+  List<String> exercises = [
+    'Göğüs ve Arka Kol',
+    'Sırt ve Ön Kol',
+    'Omuz ve Bacak'
+  ];
 
-// class _MyCheckboxState extends State<MyCheckbox> {
-//   GogusPage _gogusPage = GogusPage();
-  
-//   bool? _isChecked = false;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Flexible(
-//           flex: 3,
-//           child: Padding(
-//             padding: EdgeInsets.only(left: 10),
-//             child: CheckboxListTile(
-//               autofocus: true,
-//               hoverColor: Colors.red,
-//               controlAffinity: ListTileControlAffinity.trailing,
-//               title: widget.title,
-//               subtitle: widget.subtitle,
-//               activeColor: Colors.orange,
-//               tileColor: Colors.black54,
-//               checkColor: Colors.white,
-//               value: _isChecked,
-//               onChanged: (bool? newValue) {
-//                 setState(() {
-//                   _isChecked = newValue;
-//                 });
-//               },
-//             ),
-//           ),
-//         ),
-//         Flexible(
-//           flex: 1,
-//           child: Padding(
-//             padding: const EdgeInsets.only(right: 15.0),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+  String currentDay = '';
+
+  @override
+  void initState() {
+    super.initState();
+    DateTime now = DateTime.now();
+    int todayIndex = now.weekday - 1;
+    currentDay = days[todayIndex];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MyScaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+        children: [
+          Row(
+            children: [
+          MyContainer(),
+          MyContainer(),
+          MyContainer(),
+          MyContainer(),
+          MyContainer(),
+            ],
+          ),
+          
+          SizedBox(height: 60,),
+          getTodayExercise()
+        ],
+          ),
+      ));
+  }
+
+  Widget getTodayExercise() {
+    bool isChecked = false;
+    if (currentDay == 'Perşembe' || currentDay == 'Pazar') {
+      return Text('Dinlenme Günü');
+    } else {
+      int index = (days.indexOf(currentDay) - 1) % exercises.length;
+      if (exercises[index] == 'Göğüs ve Arka Kol') {
+        return Column(
+          children: [
+            MyButton(
+              text: 'Göğüs',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GogusPage(),
+                ),
+              ),
+              showCheckbox: true,
+            ),
+            SizedBox(height: 30,),
+             MyButton(
+      text: 'Arka Kol',
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TricepsPage(),
+        ),
+      ),
+      showCheckbox: true,
+    ),
+            SizedBox(height: 30,),
+           MyButton(
+              text: 'Profil Sayfası',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              ),
+            ),
+          ],
+        );
+      } else {
+        return Text('Dinlenme Gününüz');
+      }
+    }
+  }
+}

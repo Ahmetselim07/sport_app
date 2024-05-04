@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
 
-class MyButton extends StatelessWidget {
+class MyButton extends StatefulWidget {
   final String text;
-  final void Function()? onTap;
+  final Function()? onTap;
+  final bool showCheckbox; // Görünürlüğü kontrol etmek için bir değer eklendi
+
   const MyButton({
-    super.key,
-    required this.text, 
-    required this.onTap,
-  });
+    Key? key,
+    required this.text,
+    this.onTap,
+    this.showCheckbox = false, // Varsayılan olarak false yapıldı
+  }) : super(key: key);
+
+  @override
+  _MyButtonState createState() => _MyButtonState();
+}
+
+class _MyButtonState extends State<MyButton> {
+  bool isChecked = false; // Checkbox durumu
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:onTap,
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!();
+        }
+      },
       child: Container(
+        height: 75,
+        width: 400,
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(180)),
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(20),
+        ),
         padding: EdgeInsets.all(25),
         margin: EdgeInsets.symmetric(horizontal: 25),
-        child: Center(
-          child: Text(text),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(widget.text, style: TextStyle(fontSize: 15)),
+            if (widget.showCheckbox) // Görünürlük kontrolü
+              Checkbox(
+                value: isChecked,
+                activeColor: Colors.lightGreen,
+                onChanged: (value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
+              ),
+          ],
         ),
       ),
     );

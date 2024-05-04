@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //logo
-          Image.asset(
+        Image.asset(
             'assets/images/fitness.png',
             width: 200,
             color: Colors.black,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sport_app/components/go_back.dart';
 import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_button.dart';
@@ -11,21 +12,30 @@ import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
 
 // ignore: must_be_immutable
-class ProfilePage extends StatelessWidget {
-  AuthService authService = AuthService();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool hareketlerGizliMi = false;
+  AuthService authService = AuthService();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
   Widget build(BuildContext context) {
+    
     return MyScaffold(
       color: Theme.of(context).colorScheme.background,
       body: FutureBuilder<DocumentSnapshot>(
           future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Veriler yüklenirken gösterilecek yüklenme animasyonu
-            }
+            // if (snapshot.connectionState == ConnectionState.waiting) {
+            //   return const CircularProgressIndicator(); // Veriler yüklenirken gösterilecek yüklenme animasyonu
+            // }
             if (snapshot.hasError) {
               return Text(
                   'Error: ${snapshot.error}'); // Hata durumunda hata mesajı gösterme
@@ -60,7 +70,7 @@ class ProfilePage extends StatelessWidget {
                             name,
                             style: TextStyle(
                                 fontSize: 20,
-                                decoration: TextDecoration.underline),
+                                ),
                           ),
                           SizedBox(
                             height: 10,
@@ -69,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                             surname,
                             style: TextStyle(
                                 fontSize: 20,
-                                decoration: TextDecoration.underline),
+                                ),
                           ),
                         ],
                       )
@@ -119,19 +129,27 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         'Tüm Hareketler',
                         style: TextStyle(fontSize: 25),
                       ),
-                      Icon(Icons.arrow_downward)
+                      IconButton(
+                        icon: Icon(Icons.arrow_downward),
+                        onPressed: () {
+                          setState(() {
+                            hareketlerGizliMi = !hareketlerGizliMi;
+                          });
+                        },
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 25,
                   ),
+                  if(!hareketlerGizliMi)...[
                   MyButton(
                       text: 'Göğüs',
                       onTap: () {
@@ -149,7 +167,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  TricepsPage()));
+                                builder: (context) => TricepsPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -160,7 +178,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  BicepsPage()));
+                                builder: (context) => BicepsPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -171,7 +189,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  SirtPage()));
+                                builder: (context) => SirtPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -182,7 +200,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  BacakPage()));
+                                builder: (context) => BacakPage()));
                       }),
                   const SizedBox(
                     height: 10,
@@ -193,17 +211,13 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  OmuzPage()));
+                                builder: (context) => OmuzPage()));
                       }),
                   const SizedBox(
                     height: 15,
                   ),
-                  IconButton(
-                      onPressed: () {
-                        authService.signOut();
-                      },
-                      icon: const Icon(Icons.logout))
-                ],
+                  MyGoBack()
+                ],],
               ),
             );
           }),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sport_app/components/go_back.dart';
 import 'package:sport_app/components/my_checkbox.dart';
 import 'package:sport_app/components/my_scaffold.dart';
 
@@ -30,12 +31,7 @@ class OmuzPage extends StatelessWidget {
                 controller: _facePullController,
                 exercise: 'Face Pull'),
                 SizedBox(height: 30,),
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back),
-            )
+            MyGoBack(),
           ],
         ),
       ),

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_app/components/my_helper.dart';
-// SharedPrefHelper'ı içeri alın
 
 class MyCheckbox extends StatefulWidget {
   final Widget title;
- 
   final TextEditingController controller;
   final String exercise;
+  final Function(bool)? onChanged;
 
   const MyCheckbox({
     Key? key,
     required this.title,
-    
     required this.controller,
     required this.exercise,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,7 @@ class MyCheckbox extends StatefulWidget {
 }
 
 class _MyCheckboxState extends State<MyCheckbox> {
-  bool? _isChecked = false;
+  bool _isChecked = false;
   Map<String, int> savedKgs = {};
 
   @override
@@ -33,7 +32,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
 
   void _loadSavedKgs() async {
     savedKgs = await SharedPrefHelper.loadSavedKgs([widget.exercise]);
-    setState(() {}); // Yeniden çizim için state'i güncelle
+    setState(() {});
   }
 
   @override
@@ -42,13 +41,10 @@ class _MyCheckboxState extends State<MyCheckbox> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CheckboxListTile(
-          autofocus: true,
-          hoverColor: Colors.red,
           controlAffinity: ListTileControlAffinity.trailing,
           title: widget.title,
           subtitle: Text(
             'Kaydedilen kg: ${savedKgs[widget.exercise] ?? 0}',
-            key: Key('saved_kg_text'), // Key ekleyin
           ),
           activeColor: Colors.orange,
           tileColor: Colors.black54,
@@ -56,21 +52,21 @@ class _MyCheckboxState extends State<MyCheckbox> {
           value: _isChecked,
           onChanged: (bool? newValue) {
             setState(() {
-              _isChecked = newValue;
+              _isChecked = newValue!;
+              widget.onChanged?.call(newValue);
             });
           },
         ),
         Padding(
-  padding: const EdgeInsets.only(left: 10.0),
-  child: SharedPrefHelper.buildKgInputAndSaveButton(
-    controller: widget.controller,
-    exercise: widget.exercise,
-    onSaved: () {
-      _loadSavedKgs(); // Metin güncellendiğinde savedKgs'yi yeniden yükleyin
-      
-    },
-  ),
-),
+          padding: const EdgeInsets.only(left: 10.0),
+          child: SharedPrefHelper.buildKgInputAndSaveButton(
+            controller: widget.controller,
+            exercise: widget.exercise,
+            onSaved: () {
+              _loadSavedKgs();
+            },
+          ),
+        ),
       ],
     );
   }

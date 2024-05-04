@@ -22,23 +22,19 @@ class MyScaffold extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
         child: AppBar(
-          centerTitle: true, // Center the title horizontally
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text('SPOR', style: TextStyle(fontSize: 30)),
-              Spacer(),
-               // Add a spacer to push the image to the right
-              Image.asset(
-                'assets/images/defaultProfile.png',
-                height: 60,
-              ),
-              SizedBox(width: 20), // Add some space after the image
-            ],
-          ),
+          centerTitle: true,
+          title: Text('SPOR', style: TextStyle(fontSize: 30)),
+          actions: [
+            Image.asset(
+              'assets/images/defaultProfile.png',
+              height: 60,
+            ),
+            SizedBox(width: 20),
+          ],
+          
         ),
       ),
+
       body: body,
     );
   }
