@@ -27,9 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return MyScaffold(
-      color: Theme.of(context).colorScheme.background,
+      
       body: FutureBuilder<DocumentSnapshot>(
           future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
           builder: (context, snapshot) {
@@ -69,8 +68,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             name,
                             style: TextStyle(
-                                fontSize: 20,
-                                ),
+                              fontSize: 20,
+                            ),
                           ),
                           SizedBox(
                             height: 10,
@@ -78,8 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             surname,
                             style: TextStyle(
-                                fontSize: 20,
-                                ),
+                              fontSize: 20,
+                            ),
                           ),
                         ],
                       )
@@ -129,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
@@ -149,75 +148,80 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 25,
                   ),
-                  if(!hareketlerGizliMi)...[
-                  MyButton(
-                      text: 'Göğüs',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GogusPage()));
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyButton(
-                      text: 'Triceps',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TricepsPage()));
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyButton(
-                      text: 'Biceps',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BicepsPage()));
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyButton(
-                      text: 'Sırt',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SirtPage()));
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyButton(
-                      text: 'Bacak',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BacakPage()));
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyButton(
-                      text: 'Omuz',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => OmuzPage()));
-                      }),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  MyGoBack()
-                ],],
+                  if (!hareketlerGizliMi) ...[
+                    MyButton(
+                        text: 'Göğüs',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GogusPage()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    MyButton(
+                        text: 'Triceps',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TricepsPage()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    MyButton(
+                        text: 'Biceps',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BicepsPage()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    MyButton(
+                        text: 'Sırt',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SirtPage()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    MyButton(
+                        text: 'Bacak',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BacakPage()));
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    MyButton(
+                        text: 'Omuz',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OmuzPage()));
+                        }),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                   
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MyGoBack()
+                  ],
+                ],
               ),
             );
           }),

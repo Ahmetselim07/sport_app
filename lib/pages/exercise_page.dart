@@ -3,8 +3,12 @@ import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_scaffold.dart';
+import 'package:sport_app/pages/bacak_page.dart';
+import 'package:sport_app/pages/biceps_page.dart';
 import 'package:sport_app/pages/gogus_page.dart';
+import 'package:sport_app/pages/omuz_page.dart';
 import 'package:sport_app/pages/profile_page.dart';
+import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
 
 class ExercisePage extends StatefulWidget {
@@ -105,9 +109,85 @@ class _ExercisePageState extends State<ExercisePage> {
             ),
           ],
         );
-      } else {
-        return Text('Dinlenme Gününüz');
+      } 
+     else if (exercises[index] == 'Sırt ve Ön Kol') {
+        return Column(
+          children: [
+            MyButton(
+              text: 'Sırt',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SirtPage(),
+                ),
+              ),
+              showCheckbox: true,
+            ),
+            SizedBox(height: 30,),
+             MyButton(
+      text: 'Arka Kol',
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BicepsPage(),
+        ),
+      ),
+      showCheckbox: true,
+    ),
+            SizedBox(height: 30,),
+           MyButton(
+              text: 'Profil Sayfası',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              ),
+            ),
+          ],
+        );
       }
+    else if (exercises[index] == 'Omuz ve Bacak') {
+        return Column(
+          children: [
+            MyButton(
+              text: 'Omuz',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OmuzPage(),
+                ),
+              ),
+              showCheckbox: true,
+            ),
+            SizedBox(height: 30,),
+             MyButton(
+      text: 'Bacak',
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BacakPage(),
+        ),
+      ),
+      showCheckbox: true,
+    ),
+            SizedBox(height: 30,),
+           MyButton(
+              text: 'Profil Sayfası',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+      else{
+        return Text('');
+      }
+      
     }
   }
 }

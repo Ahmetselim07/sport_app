@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_app/components/my_checkbox.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_helper.dart';
 import 'package:sport_app/components/my_scaffold.dart';
+
 
 class GogusPage extends StatefulWidget {
   GogusPage({Key? key}) : super(key: key);
@@ -119,6 +119,7 @@ class _GogusPageState extends State<GogusPage> {
             SizedBox(
               height: 10,
             ),
+           
             SizedBox(
               height: 30,
             ),

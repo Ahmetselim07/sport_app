@@ -32,4 +32,9 @@ class AuthService {
   Future<void> signOut() async {
     return await _auth.signOut();
   }
+  void updateProfilePhoto(String imagePath) {
+    // Burada kullanıcının profil fotoğrafını güncelleme işlemini gerçekleştirin
+    // Örneğin, Firebase Storage kullanarak profil fotoğrafını güncelleyebilirsiniz
+  }
+  
 }
