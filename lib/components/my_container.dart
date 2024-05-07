@@ -12,6 +12,7 @@ class MyContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         border: Border.all(),
+        borderRadius: BorderRadius.circular(360),
       ),
     );
   }

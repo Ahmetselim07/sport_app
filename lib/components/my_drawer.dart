@@ -1,18 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/pages/exercise_page.dart';
 import 'package:sport_app/pages/home_page.dart';
 import 'package:sport_app/pages/profile_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
-import 'package:sport_app/themes/dark_mode.dart';
-import 'package:sport_app/themes/light_mode.dart';
 import 'package:sport_app/themes/theme_provider.dart';
-
+@immutable
 class MyDrawer extends StatelessWidget {
-  AuthService authService = AuthService();
+ final AuthService authService = AuthService();
   MyDrawer({super.key});
 
   @override
@@ -26,17 +23,17 @@ class MyDrawer extends StatelessWidget {
           children: [
             GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage())),
+                    MaterialPageRoute(builder: (context) => const HomePage())),
                 child: Container(
                   width: double.infinity,
                   height: 60,
-                  margin: EdgeInsets.all(24),
-                  padding: EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Text('Ana Sayfa'),
+                  child: const Text('Ana sayfa'),
                 )),
             MyButton(
               text: 'Egzersizlerim',
@@ -57,8 +54,8 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(24),
-              padding: EdgeInsets.all(15),
+              margin: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(12),
@@ -66,7 +63,7 @@ class MyDrawer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Dark Mode'),
+                  const Text('Dark Mode'),
                   CupertinoSwitch(
                       value: Provider.of<ThemeProvider>(context, listen: false)
                           .isDarkMode,

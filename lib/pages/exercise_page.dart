@@ -85,6 +85,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
               showCheckbox: true,
+              isChecked: true,
             ),
             SizedBox(height: 30,),
              MyButton(
@@ -95,7 +96,7 @@ class _ExercisePageState extends State<ExercisePage> {
           builder: (context) => TricepsPage(),
         ),
       ),
-      showCheckbox: true,
+      showCheckbox: true, 
     ),
             SizedBox(height: 30,),
            MyButton(

@@ -1,15 +1,18 @@
+import 'dart:ui_web';
+
 import 'package:flutter/material.dart';
 
 class MyButton extends StatefulWidget {
   final String text;
   final Function()? onTap;
   final bool showCheckbox; // Görünürlüğü kontrol etmek için bir değer eklendi
-
+  final bool? isChecked;
   const MyButton({
     Key? key,
     required this.text,
     this.onTap,
     this.showCheckbox = false, // Varsayılan olarak false yapıldı
+     this.isChecked,
   }) : super(key: key);
 
   @override
@@ -17,7 +20,13 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> {
-  bool isChecked = false; // Checkbox durumu
+   // Checkbox durumu
+   late bool isChecked;
+
+   @override
+   void initState() {
+     super.initState();
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class _MyButtonState extends State<MyButton> {
             Text(widget.text, style: TextStyle(fontSize: 15)),
             if (widget.showCheckbox) // Görünürlük kontrolü
               Checkbox(
-                value: isChecked,
+                value: widget.isChecked,
                 activeColor: Colors.lightGreen,
                 onChanged: (value) {
                   setState(() {
