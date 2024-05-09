@@ -7,6 +7,7 @@ class MyCheckbox extends StatefulWidget {
   final TextEditingController controller;
   final String exercise;
   final Function(bool)? onChanged;
+ final bool isChecked;
 
   const MyCheckbox({
     Key? key,
@@ -14,6 +15,7 @@ class MyCheckbox extends StatefulWidget {
     required this.controller,
     required this.exercise,
     this.onChanged,
+   required this.isChecked,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class MyCheckbox extends StatefulWidget {
 }
 
 class _MyCheckboxState extends State<MyCheckbox> {
-  bool _isChecked = false;
+ 
   Map<String, int> savedKgs = {};
 
   @override
@@ -32,7 +34,9 @@ class _MyCheckboxState extends State<MyCheckbox> {
 
   void _loadSavedKgs() async {
     savedKgs = await SharedPrefHelper.loadSavedKgs([widget.exercise]);
-    setState(() {});
+    setState(() {
+      
+    });
   }
 
   @override
@@ -49,12 +53,11 @@ class _MyCheckboxState extends State<MyCheckbox> {
           activeColor: Colors.orange,
           tileColor: Colors.black54,
           checkColor: Colors.white,
-          value: _isChecked,
+          value: widget.isChecked, // Dışarıdan alınan kontrol durumu kullanılıyor
           onChanged: (bool? newValue) {
-            setState(() {
-              _isChecked = newValue!;
-              widget.onChanged?.call(newValue);
-            });
+            // onChanged fonksiyonu dışarıdan alınacak ve burada kullanılacak
+            // Dışarıdan gelen fonksiyon çağrılacak
+            widget.onChanged?.call(newValue ?? false);
           },
         ),
         Padding(

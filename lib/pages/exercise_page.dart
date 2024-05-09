@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sport_app/components/my_button.dart';
-import 'package:sport_app/components/my_button.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_scaffold.dart';
 import 'package:sport_app/pages/bacak_page.dart';
@@ -50,7 +49,7 @@ class _ExercisePageState extends State<ExercisePage> {
         padding: const EdgeInsets.all(30),
         child: Column(
         children: [
-          Row(
+        const Row(
             children: [
           MyContainer(),
           MyContainer(),
@@ -60,7 +59,7 @@ class _ExercisePageState extends State<ExercisePage> {
             ],
           ),
           
-          SizedBox(height: 60,),
+        const  SizedBox(height: 60,),
           getTodayExercise()
         ],
           ),
@@ -68,8 +67,8 @@ class _ExercisePageState extends State<ExercisePage> {
   }
 
   Widget getTodayExercise() {
-    bool isChecked = false;
-    if (currentDay == 'Perşembe' || currentDay == 'Pazar') {
+    
+    if (currentDay == 'Cuma' || currentDay == 'Pazar') {
       return Text('Dinlenme Günü');
     } else {
       int index = (days.indexOf(currentDay) - 1) % exercises.length;
@@ -85,7 +84,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
               showCheckbox: true,
-              isChecked: true,
+              
             ),
             SizedBox(height: 30,),
              MyButton(
@@ -96,7 +95,7 @@ class _ExercisePageState extends State<ExercisePage> {
           builder: (context) => TricepsPage(),
         ),
       ),
-      showCheckbox: true, 
+      showCheckbox: true,
     ),
             SizedBox(height: 30,),
            MyButton(
@@ -126,7 +125,7 @@ class _ExercisePageState extends State<ExercisePage> {
             ),
             SizedBox(height: 30,),
              MyButton(
-      text: 'Arka Kol',
+      text: 'Ön Kol',
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -134,6 +133,7 @@ class _ExercisePageState extends State<ExercisePage> {
         ),
       ),
       showCheckbox: true,
+    
     ),
             SizedBox(height: 30,),
            MyButton(
@@ -150,6 +150,7 @@ class _ExercisePageState extends State<ExercisePage> {
       }
     else if (exercises[index] == 'Omuz ve Bacak') {
         return Column(
+          
           children: [
             MyButton(
               text: 'Omuz',
@@ -160,17 +161,20 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
               showCheckbox: true,
+              isChecked: true,
             ),
             SizedBox(height: 30,),
              MyButton(
       text: 'Bacak',
       onTap: () => Navigator.push(
+        
         context,
         MaterialPageRoute(
-          builder: (context) => BacakPage(),
+          builder: (context) => BacakPage(isOver: false,),
         ),
       ),
       showCheckbox: true,
+      
     ),
             SizedBox(height: 30,),
            MyButton(

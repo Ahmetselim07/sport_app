@@ -1,7 +1,4 @@
-import 'dart:ui_web';
-
 import 'package:flutter/material.dart';
-
 class MyButton extends StatefulWidget {
   final String text;
   final Function()? onTap;
@@ -51,7 +48,7 @@ class _MyButtonState extends State<MyButton> {
             Text(widget.text, style: TextStyle(fontSize: 15)),
             if (widget.showCheckbox) // Görünürlük kontrolü
               Checkbox(
-                value: widget.isChecked,
+                value: widget.isChecked ?? true,
                 activeColor: Colors.lightGreen,
                 onChanged: (value) {
                   setState(() {

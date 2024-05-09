@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sport_app/components/my_container.dart';
-import 'package:sport_app/pages/exercise_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_scaffold.dart';
 
@@ -16,8 +15,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
+      body: const Padding(
+        padding: EdgeInsets.all(25.0),
         child: Column(
           children: [
             

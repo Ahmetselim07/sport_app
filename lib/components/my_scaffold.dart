@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart'; // Ekledim: Galeriye erişim için
-import 'package:sport_app/components/my_drawer.dart';
-import 'package:sport_app/services/auth/auth_service.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:sport_app/components/my_drawer.dart';
+import 'package:sport_app/services/auth/auth_service.dart';
+
 class MyScaffold extends StatefulWidget {
   final Widget body;
   final Widget? bottomNavigationBar;
-  
 
   MyScaffold({
     Key? key,
@@ -23,8 +23,24 @@ class MyScaffold extends StatefulWidget {
 
 class _MyScaffoldState extends State<MyScaffold> {
   AuthService _authService = AuthService();
-
   File? image;
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission(); // initState içinde galeri izni iste
+  }
+
+  void requestPermission() async {
+    var status = await Permission.photos.request(); // Fotoğraf izni isteği gönder
+
+    if (status.isGranted) {
+      // İzin verildiyse, fotoğraf seçme ekranını aç
+      // Kullanıcı profil fotoğrafını seçtikten sonra, bu fotoğrafı kullanarak işlemleri yapabilirsiniz
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      // İzin reddedildiyse veya kalıcı olarak reddedildiyse, kullanıcıya bir açıklama yapabilirsiniz
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +53,16 @@ class _MyScaffoldState extends State<MyScaffold> {
           centerTitle: true,
           title: Text('SPOR', style: TextStyle(fontSize: 30)),
           actions: [
-          IconButton(
-            onPressed: () {
-              pickImage(ImageSource.gallery);
-              setState(() {
-            
-              });
-               
-            },
-            icon: image != null
-                ? CircleAvatar(
-                    backgroundImage: FileImage(image!),
-                  )
-                : Icon(Icons.account_circle), // Default ikon
-          ),
+            IconButton(
+              onPressed: () async {
+                pickImage(ImageSource.gallery,context); // Galeriyi aç
+              },
+              icon: image != null
+                  ? CircleAvatar(
+                      backgroundImage: FileImage(image!),
+                    )
+                  : Icon(Icons.account_circle), // Default ikon
+            ),
             SizedBox(width: 20),
           ],
         ),
@@ -59,14 +71,45 @@ class _MyScaffoldState extends State<MyScaffold> {
     );
   }
 
- Future<void> pickImage(ImageSource source) async {
+  Future<void> pickImage(ImageSource source,BuildContext context) async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imagePermanent = await saveImagePermanently(image.path);
-      setState(() {
-        this.image = imagePermanent;
-      });
+      final status = await Permission.photos.request(); // İzin iste
+      print(status);
+      if (status.isGranted) {
+        final pickedImage = await ImagePicker().pickImage(source: source);
+        if (pickedImage == null) return;
+        final imagePermanent = await saveImagePermanently(pickedImage.path);
+        setState(() {
+          image = imagePermanent;
+        });
+      } else if (status.isDenied || status.isPermanentlyDenied) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('İzin Gerekli'),
+            content: Text('Profil fotoğrafını değiştirebilmek için galeriye erişim izni gereklidir.'),
+            actions: [
+              TextButton(
+                onPressed: () async{
+                   final pickedImage = await ImagePicker().pickImage(source: source);
+        if (pickedImage == null) return;
+        final imagePermanent = await saveImagePermanently(pickedImage.path);
+        setState(() {
+          image = imagePermanent;
+        });
+                },
+                child: Text('İzin Ver'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Kapat'),
+              ),
+            ],
+          ),
+        );
+      }
     } catch (e) {
       print(e);
     }

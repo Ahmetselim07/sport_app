@@ -199,7 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BacakPage()));
+                                  builder: (context) => BacakPage(isOver: false,)));
                         }),
                     const SizedBox(
                       height: 10,
