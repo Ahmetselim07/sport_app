@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_app/components/my_drawer.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 
@@ -22,23 +23,38 @@ class MyScaffold extends StatefulWidget {
 }
 
 class _MyScaffoldState extends State<MyScaffold> {
+  bool _permissionGranted = false;
   AuthService _authService = AuthService();
   File? image;
+  late BuildContext scaffoldContext;
 
   @override
   void initState() {
     super.initState();
-    requestPermission(); // initState içinde galeri izni iste
+    _checkPermission(); // Sadece izin kontrolü yapılıyor
   }
 
-  void requestPermission() async {
-    var status = await Permission.photos.request(); // Fotoğraf izni isteği gönder
+  _checkPermission() async {
+    PermissionStatus permissionStatus = await Permission.photos.status;
+    if (permissionStatus == PermissionStatus.granted) {
+      setState(() {
+        _permissionGranted = true;
+      });
+    } else {
+      // İzin verilmemişse, bu noktada izin isteği yapılmalı
+      _requestPermission();
+    }
+  }
 
-    if (status.isGranted) {
-      // İzin verildiyse, fotoğraf seçme ekranını aç
-      // Kullanıcı profil fotoğrafını seçtikten sonra, bu fotoğrafı kullanarak işlemleri yapabilirsiniz
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      // İzin reddedildiyse veya kalıcı olarak reddedildiyse, kullanıcıya bir açıklama yapabilirsiniz
+  _requestPermission() async {
+    PermissionStatus permissionStatus = await Permission.photos.request();
+    if (permissionStatus == PermissionStatus.granted) {
+      setState(() {
+        _permissionGranted = true;
+      });
+      // İzin bir daha sormamak için shared_preferences kullanarak izni saklanabilir
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('permissionGranted', true);
     }
   }
 
@@ -54,8 +70,9 @@ class _MyScaffoldState extends State<MyScaffold> {
           title: Text('SPOR', style: TextStyle(fontSize: 30)),
           actions: [
             IconButton(
-              onPressed: () async {
-                pickImage(ImageSource.gallery,context); // Galeriyi aç
+              onPressed: () {
+                // Kullanıcı bir eylem gerçekleştirdiğinde izin isteği yapılıyor
+                pickImage(ImageSource.gallery);
               },
               icon: image != null
                   ? CircleAvatar(
@@ -71,48 +88,13 @@ class _MyScaffoldState extends State<MyScaffold> {
     );
   }
 
-  Future<void> pickImage(ImageSource source,BuildContext context) async {
-    try {
-      final status = await Permission.photos.request(); // İzin iste
-      print(status);
-      if (status.isGranted) {
-        final pickedImage = await ImagePicker().pickImage(source: source);
-        if (pickedImage == null) return;
-        final imagePermanent = await saveImagePermanently(pickedImage.path);
-        setState(() {
-          image = imagePermanent;
-        });
-      } else if (status.isDenied || status.isPermanentlyDenied) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('İzin Gerekli'),
-            content: Text('Profil fotoğrafını değiştirebilmek için galeriye erişim izni gereklidir.'),
-            actions: [
-              TextButton(
-                onPressed: () async{
-                   final pickedImage = await ImagePicker().pickImage(source: source);
-        if (pickedImage == null) return;
-        final imagePermanent = await saveImagePermanently(pickedImage.path);
-        setState(() {
-          image = imagePermanent;
-        });
-                },
-                child: Text('İzin Ver'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Kapat'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
+  Future<void> pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage == null) return;
+    final imagePermanent = await saveImagePermanently(pickedImage.path);
+    setState(() {
+      image = imagePermanent;
+    });
   }
 
   Future<File> saveImagePermanently(String imagePath) async {

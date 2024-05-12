@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_app/components/my_checkbox.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_scaffold.dart';
-
+import 'package:sport_app/pages/exercise_page.dart';
 
 class GogusPage extends StatefulWidget {
   const GogusPage({Key? key}) : super(key: key);
@@ -21,8 +21,8 @@ class _GogusPageState extends State<GogusPage> {
   bool _inclineChecked = false;
   bool _declineChecked = false;
   bool _pecDeckChecked = false;
-  bool _isOver = false; // _isOver değişkeni eklenmiştir
-
+  bool _gogusIsOver = false; // _isOver değişkeni eklenmiştir
+  bool _tricepsIsOver = false;
   @override
   void initState() {
     super.initState();
@@ -30,19 +30,18 @@ class _GogusPageState extends State<GogusPage> {
     _checkCompletion();
   }
 
-  
   void _checkCompletion() {
-  if (_inclineChecked && _declineChecked && _pecDeckChecked) {
-    setState(() {
-      _isOver = true;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Hareketleri tamamladınız!"),
-      ),
-    );
+    if (_inclineChecked && _declineChecked && _pecDeckChecked) {
+      setState(() {
+        _gogusIsOver = true;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Hareketleri tamamladınız!"),
+        ),
+      );
+    }
   }
-}
 
   Future<void> _loadCheckboxState() async {
     _prefs = await SharedPreferences.getInstance();
@@ -54,8 +53,7 @@ class _GogusPageState extends State<GogusPage> {
     });
   }
 
-
-void _saveCheckboxState() {
+  void _saveCheckboxState() {
     _prefs.setBool('inclineChecked', _inclineChecked);
     _prefs.setBool('declineChecked', _declineChecked);
     _prefs.setBool('pecDeckChecked', _pecDeckChecked);
@@ -157,6 +155,20 @@ void _saveCheckboxState() {
             SizedBox(
               height: 30,
             ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExercisePage(
+                        gogusIsOver: _gogusIsOver,
+                       
+                        ),
+                          
+                       
+                      ));
+                },
+                child: Text('Egzersiz Sayfasına Git')),
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {

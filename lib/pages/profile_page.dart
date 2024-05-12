@@ -10,6 +10,8 @@ import 'package:sport_app/pages/biceps_page.dart';
 import 'package:sport_app/pages/omuz_page.dart';
 import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
+import 'package:sport_app/services/auth/notification_helper.dart';
+import 'package:timezone/timezone.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
@@ -28,7 +30,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
-      
       body: FutureBuilder<DocumentSnapshot>(
           future: _getUserData(), // Kullanıcı verilerini getiren fonksiyon
           builder: (context, snapshot) {
@@ -199,7 +200,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BacakPage(isOver: false,)));
+                                  builder: (context) => BacakPage(
+                                        isOver: false,
+                                      )));
                         }),
                     const SizedBox(
                       height: 10,
@@ -215,11 +218,39 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 15,
                     ),
-                   
                     SizedBox(
                       height: 20,
                     ),
-                    MyGoBack()
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ElevatedButton(
+  onPressed: () async {
+  try {
+    print('içerdeyim');
+    // Şu andan 2 saniye sonrası için bir zaman oluştu
+    // Bildirimi planla
+    await NotificationHelper.scheduleDailyNotification(
+      
+      title: 'Yeni gün. Yeni hareketler',
+      body: 'Hareketleri dört gözle bekliyoruz',
+      id: 0,
+      payload: 'Merhabalar',
+      
+    );
+  } catch (e) {
+    print('HATA OLUŞTU: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Bildirim gönderirken bir hata oluştu: $e'),
+      ),
+    );
+  }
+},
+
+  child: Text('Bildirim gönder'),
+),
+                    MyGoBack(),
                   ],
                 ],
               ),

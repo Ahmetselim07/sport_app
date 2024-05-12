@@ -14,6 +14,8 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool? _gosusIsOver;
+    bool? _tricepsIsOver;
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.primary,
       child: Padding(

@@ -11,8 +11,13 @@ import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
 
 class ExercisePage extends StatefulWidget {
+   final bool? gogusIsOver;
+  final bool? tricepsIsOver;
+  ExercisePage({this.gogusIsOver, this.tricepsIsOver});
+  
   @override
   _ExercisePageState createState() => _ExercisePageState();
+  
 }
 
 class _ExercisePageState extends State<ExercisePage> {
@@ -44,6 +49,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return MyScaffold(
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -68,7 +74,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   Widget getTodayExercise() {
     
-    if (currentDay == 'Cuma' || currentDay == 'Pazar') {
+    if (currentDay == 'Perşembe' || currentDay == 'Pazar') {
       return Text('Dinlenme Günü');
     } else {
       int index = (days.indexOf(currentDay) - 1) % exercises.length;
@@ -84,15 +90,17 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
               showCheckbox: true,
-              
+              isChecked: widget.gogusIsOver,
             ),
             SizedBox(height: 30,),
              MyButton(
+              isChecked: widget.tricepsIsOver,
       text: 'Arka Kol',
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => TricepsPage(),
+          
         ),
       ),
       showCheckbox: true,
