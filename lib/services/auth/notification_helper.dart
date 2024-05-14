@@ -59,7 +59,7 @@ class NotificationHelper {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'Your Chanel Name',
-      'Your channel descriptio',
+      'Your channel description',
       channelDescription: 'description',
       importance: Importance.max,
       ticker: 'ticker',

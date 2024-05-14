@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sport_app/components/go_back.dart';
+import 'package:sport_app/components/my_image.dart';
 import 'package:sport_app/pages/gogus_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
 import 'package:sport_app/components/my_button.dart';
@@ -15,7 +18,8 @@ import 'package:timezone/timezone.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  final ImageProvider? image;
+  ProfilePage({Key? key,this.image}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -51,6 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
             final String surname = userData['surname'] ?? '';
             final String height = userData['height'] ?? '';
             final String weight = userData['weight'] ?? '';
+            final profileImage = widget.image;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -60,10 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset(
-                        'assets/images/defaultProfile.png',
-                        height: 100,
-                      ),
+                      MyImageWidget(onImageSelected: (value) => profileImage,),
                       Column(
                         children: [
                           Text(

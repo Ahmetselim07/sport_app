@@ -6,10 +6,12 @@ import 'package:sport_app/pages/exercise_page.dart';
 import 'package:sport_app/pages/home_page.dart';
 import 'package:sport_app/pages/profile_page.dart';
 import 'package:sport_app/services/auth/auth_service.dart';
+import 'package:sport_app/services/auth/notification_helper.dart';
 import 'package:sport_app/themes/theme_provider.dart';
+
 @immutable
 class MyDrawer extends StatelessWidget {
- final AuthService authService = AuthService();
+  final AuthService authService = AuthService();
   MyDrawer({super.key});
 
   @override
@@ -75,6 +77,17 @@ class MyDrawer extends StatelessWidget {
                       }),
                 ],
               ),
+            ),
+            MyButton(
+              text: 'Bildirimleri İptal Et',
+              onTap: () async {
+                NotificationHelper.unScheduleAllNotifications();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Yeni gün bildirimi iptal edildi')),
+                );
+
+                print('ok');
+              },
             ),
             IconButton(
                 onPressed: () {

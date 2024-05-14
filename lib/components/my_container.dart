@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class MyContainer extends StatelessWidget {
   final Color? color;
-  const MyContainer({super.key, this.color});
+  final Widget? widget;
+  const MyContainer({super.key, this.color,this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,7 @@ class MyContainer extends StatelessWidget {
         border: Border.all(),
         borderRadius: BorderRadius.circular(360),
       ),
+      
     );
   }
 }

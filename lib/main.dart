@@ -6,7 +6,6 @@ import 'package:sport_app/firebase_options.dart';
 import 'package:sport_app/services/auth/notification_helper.dart';
 import 'package:sport_app/themes/theme_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -18,7 +17,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  
+    
    const MyApp({super.key});
 
   // This widget is the root of your application.

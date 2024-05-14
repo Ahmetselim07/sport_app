@@ -9,15 +9,15 @@ import 'package:sport_app/pages/omuz_page.dart';
 import 'package:sport_app/pages/profile_page.dart';
 import 'package:sport_app/pages/s%C4%B1rt_page.dart';
 import 'package:sport_app/pages/triceps_page.dart';
+import 'package:sport_app/services/auth/notification_helper.dart';
 
 class ExercisePage extends StatefulWidget {
-   final bool? gogusIsOver;
+  final bool? gogusIsOver;
   final bool? tricepsIsOver;
   ExercisePage({this.gogusIsOver, this.tricepsIsOver});
-  
+
   @override
   _ExercisePageState createState() => _ExercisePageState();
-  
 }
 
 class _ExercisePageState extends State<ExercisePage> {
@@ -49,31 +49,30 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return MyScaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Column(
+        body: Padding(
+      padding: const EdgeInsets.all(30),
+      child: Column(
         children: [
-        const Row(
+          const Row(
             children: [
-          MyContainer(),
-          MyContainer(),
-          MyContainer(),
-          MyContainer(),
-          MyContainer(),
+              MyContainer(),
+              MyContainer(),
+              MyContainer(),
+              MyContainer(),
+              MyContainer(),
             ],
           ),
-          
-        const  SizedBox(height: 60,),
+          const SizedBox(
+            height: 60,
+          ),
           getTodayExercise()
         ],
-          ),
-      ));
+      ),
+    ));
   }
 
   Widget getTodayExercise() {
-    
     if (currentDay == 'Perşembe' || currentDay == 'Pazar') {
       return Text('Dinlenme Günü');
     } else {
@@ -92,21 +91,24 @@ class _ExercisePageState extends State<ExercisePage> {
               showCheckbox: true,
               isChecked: widget.gogusIsOver,
             ),
-            SizedBox(height: 30,),
-             MyButton(
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
               isChecked: widget.tricepsIsOver,
-      text: 'Arka Kol',
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TricepsPage(),
-          
-        ),
-      ),
-      showCheckbox: true,
-    ),
-            SizedBox(height: 30,),
-           MyButton(
+              text: 'Arka Kol',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TricepsPage(),
+                ),
+              ),
+              showCheckbox: true,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
               text: 'Profil Sayfası',
               onTap: () => Navigator.push(
                 context,
@@ -115,10 +117,19 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
             ),
+            SizedBox(height: 30,),
+             ElevatedButton(
+                onPressed: () {
+                  NotificationHelper.showNotification(
+                    title: 'Bugünlük bu kadar yeter',
+                    body: 'Yeni gün için sabırsızlanıyorum',
+                    payload: 'Gelişiyoruz',
+                  );
+                },
+                child: Text('Hareketleri bitir.'))
           ],
         );
-      } 
-     else if (exercises[index] == 'Sırt ve Ön Kol') {
+      } else if (exercises[index] == 'Sırt ve Ön Kol') {
         return Column(
           children: [
             MyButton(
@@ -131,20 +142,23 @@ class _ExercisePageState extends State<ExercisePage> {
               ),
               showCheckbox: true,
             ),
-            SizedBox(height: 30,),
-             MyButton(
-      text: 'Ön Kol',
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BicepsPage(),
-        ),
-      ),
-      showCheckbox: true,
-    
-    ),
-            SizedBox(height: 30,),
-           MyButton(
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
+              text: 'Ön Kol',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BicepsPage(),
+                ),
+              ),
+              showCheckbox: true,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
               text: 'Profil Sayfası',
               onTap: () => Navigator.push(
                 context,
@@ -153,12 +167,20 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
             ),
+            SizedBox(height: 30,),
+            ElevatedButton(
+                onPressed: () {
+                  NotificationHelper.showNotification(
+                    title: 'Bugünlük bu kadar yeter',
+                    body: 'Yeni gün için sabırsızlanıyorum',
+                    payload: 'Gelişiyoruz',
+                  );
+                },
+                child: Text('Hareketleri bitir.'))
           ],
         );
-      }
-    else if (exercises[index] == 'Omuz ve Bacak') {
+      } else if (exercises[index] == 'Omuz ve Bacak') {
         return Column(
-          
           children: [
             MyButton(
               text: 'Omuz',
@@ -171,21 +193,26 @@ class _ExercisePageState extends State<ExercisePage> {
               showCheckbox: true,
               isChecked: true,
             ),
-            SizedBox(height: 30,),
-             MyButton(
-      text: 'Bacak',
-      onTap: () => Navigator.push(
-        
-        context,
-        MaterialPageRoute(
-          builder: (context) => BacakPage(isOver: false,),
-        ),
-      ),
-      showCheckbox: true,
-      
-    ),
-            SizedBox(height: 30,),
-           MyButton(
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
+              text: 'Bacak',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BacakPage(
+                    isOver: false,
+                  ),
+                ),
+              ),
+              showCheckbox: true,
+              isChecked: false,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
               text: 'Profil Sayfası',
               onTap: () => Navigator.push(
                 context,
@@ -194,13 +221,21 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
             ),
+            SizedBox(height: 30,),
+             ElevatedButton(
+                onPressed: () {
+                  NotificationHelper.showNotification(
+                    title: 'Bugünlük bu kadar yeter',
+                    body: 'Yeni gün için sabırsızlanıyorum',
+                    payload: 'Gelişiyoruz',
+                  );
+                },
+                child: Text('Hareketleri bitir.'))
           ],
         );
-      }
-      else{
+      } else {
         return Text('');
       }
-      
     }
   }
 }
