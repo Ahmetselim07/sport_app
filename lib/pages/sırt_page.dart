@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_app/components/my_checkbox.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_scaffold.dart';
+import 'package:sport_app/pages/exercise_page.dart';
 
 class SirtPage extends StatefulWidget {
   const SirtPage({super.key});
@@ -19,13 +20,16 @@ class _SirtPageState extends State<SirtPage> {
       TextEditingController();
   bool _latPulldownChecked = false;
   late SharedPreferences _prefs;
+  bool _sirtIsOver = false;
   bool _seatedCableRowChecked = false;
   bool _closeGripLatPulldownChecked = false;
   void _checkCompletion() {
     if (_closeGripLatPulldownChecked &&
         _latPulldownChecked &&
         _seatedCableRowChecked) {
-      setState(() {});
+      setState(() {
+        _sirtIsOver=true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Hareketleri tamamladınız!"),
@@ -131,6 +135,20 @@ class _SirtPageState extends State<SirtPage> {
             SizedBox(
               height: 30,
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExercisePage(
+                      sirtIsOver: _sirtIsOver,
+                    
+                    ),
+                  ),
+                );
+              },
+              child: Text('Egzersiz Sayfasına Git')),
+              SizedBox(height: 30,),
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {

@@ -14,7 +14,9 @@ import 'package:sport_app/services/auth/notification_helper.dart';
 class ExercisePage extends StatefulWidget {
   final bool? gogusIsOver;
   final bool? tricepsIsOver;
-  ExercisePage({this.gogusIsOver, this.tricepsIsOver});
+  final bool? sirtIsOver;
+  final bool? bicepsIsOver;
+  ExercisePage({this.gogusIsOver, this.tricepsIsOver,this.sirtIsOver,this.bicepsIsOver});
 
   @override
   _ExercisePageState createState() => _ExercisePageState();
@@ -133,6 +135,7 @@ class _ExercisePageState extends State<ExercisePage> {
         return Column(
           children: [
             MyButton(
+              isChecked: widget.sirtIsOver,
               text: 'Sırt',
               onTap: () => Navigator.push(
                 context,
@@ -154,6 +157,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
               showCheckbox: true,
+              isChecked: widget.bicepsIsOver,
             ),
             SizedBox(
               height: 30,
@@ -170,6 +174,7 @@ class _ExercisePageState extends State<ExercisePage> {
             SizedBox(height: 30,),
             ElevatedButton(
                 onPressed: () {
+                  
                   NotificationHelper.showNotification(
                     title: 'Bugünlük bu kadar yeter',
                     body: 'Yeni gün için sabırsızlanıyorum',
@@ -226,7 +231,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 onPressed: () {
                   NotificationHelper.showNotification(
                     title: 'Bugünlük bu kadar yeter',
-                    body: 'Yeni gün için sabırsızlanıyorum',
+                    body: 'Yeni günde görüşürüz',
                     payload: 'Gelişiyoruz',
                   );
                 },

@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:sport_app/components/my_checkbox.dart';
 import 'package:sport_app/components/my_container.dart';
 import 'package:sport_app/components/my_scaffold.dart';
+import 'package:sport_app/pages/exercise_page.dart';
 
   bool _bicepsChecked = false;
   bool _hammerChecked = false;
+  bool _bicepsIsOver = false;
 
 
 class BicepsPage extends StatefulWidget {
@@ -26,6 +28,9 @@ class _BicepsPageState extends State<BicepsPage> {
    
     void _checkCompletion(isOver) {
     if (_bicepsChecked && _hammerChecked) {
+      setState(() {
+        _bicepsIsOver =true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Hareketleri tamamladınız!"),
@@ -81,6 +86,20 @@ class _BicepsPageState extends State<BicepsPage> {
           SizedBox(
             height: 30,
           ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExercisePage(
+                      bicepsIsOver: _bicepsIsOver,
+                    
+                    ),
+                  ),
+                );
+              },
+              child: Text('Egzersiz Sayfasına Git')),
+              SizedBox(height: 30,),
           IconButton(
               onPressed: () {
                 Navigator.pop(context);
